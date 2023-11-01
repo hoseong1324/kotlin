@@ -2,6 +2,7 @@ package com.study.kotlin.user.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.study.kotlin.common.annotation.ValidEnum
+import com.study.kotlin.user.entity.User
 import com.study.kotlin.user.enum.Gender
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
@@ -38,6 +39,8 @@ data class SignUpDto(
         @JsonProperty("birthDate")
         private val _birthDate: String?
 ) {
+    val id : Long?
+        get() = null
     val email: String
         get() = _email!!
     val password: String
@@ -51,4 +54,8 @@ data class SignUpDto(
 
     private fun String.toLocalDate() : LocalDate =
             LocalDate.parse(this, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
+
+    fun toEntity(): User =
+    User(id, email, password, name, gender, birthDate)
 }
